@@ -1,0 +1,12 @@
+com\okta\scim\server\example\dto\UserDTO.class
+com\okta\scim\server\example\entity\UserEntity.class
+com\okta\scim\server\example\OktascimApplication.class
+com\okta\scim\server\example\mapper\UserMapper.class
+com\okta\scim\server\example\controller\UserController.class
+com\okta\scim\server\example\repository\UserRepository.class
+com\okta\scim\server\example\AuthInterceptor.class
+com\okta\scim\server\example\service\UserService.class
+com\okta\scim\util\model\Name.class
+com\okta\scim\server\example\entity\TestEntity.class
+com\okta\scim\server\example\WebConfig.class
+com\okta\scim\server\example\repository\TestRepository.class
