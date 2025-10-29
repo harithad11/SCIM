@@ -54,7 +54,7 @@
 			<artifactId>scim-server-sdk</artifactId>
 			<version>03.00.03</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/scim-server-sdk-03.00.03.jar</systemPath>
+			<systemPath>${project.basedir}/src/main/resources/lib/scim-server-sdk-03.00.03.jar</systemPath>
 		</dependency>
 
 		<dependency>
