@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class AuthInterceptor implements HandlerInterceptor {
     
     @Value("${OKTA_TOKEN}")
-    private static final String TOKEN;
+    private String TOKEN;
 
     /**
      * Validates the Authorization header before controller execution.
