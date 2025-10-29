@@ -49,13 +49,19 @@
 			<version>2.13.0</version>
 		</dependency>
 
-		<dependency>
+        <dependency>
+            <groupId>com.okta.scim</groupId>
+            <artifactId>okta-scim-sdk</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+		<!-- <dependency>
 			<groupId>com.okta.scim</groupId>
 			<artifactId>scim-server-sdk</artifactId>
 			<version>03.00.03</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/lib/scim-server-sdk-03.00.03.jar</systemPath>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>com.unboundid.product.scim</groupId>
