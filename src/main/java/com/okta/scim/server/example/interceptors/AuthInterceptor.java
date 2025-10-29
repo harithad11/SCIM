@@ -8,14 +8,18 @@ package com.okta.scim.server.example;
 import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Checks the "Authorization" header for a valid Bearer token.
  * Returns 401 Unauthorized if the token is missing or invalid.
  */
+@Component
 public class AuthInterceptor implements HandlerInterceptor {
-
-    private static final String TOKEN = "00SvMqRNdFYjFRh6Cqm80A8lbDQxJdxfvZR8KGZa-J";
+    
+    @Value("${OKTA_TOKEN}")
+    private static final String TOKEN;
 
     /**
      * Validates the Authorization header before controller execution.
