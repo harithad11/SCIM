@@ -10,8 +10,6 @@ import com.okta.scim.server.example.entity.UserEntity;
 import com.okta.scim.util.model.Email;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 /**
  * Converts SCIM user DTOs to entities and updates entities from DTOs.
  */
@@ -25,8 +23,7 @@ public class UserMapper {
      * @return new UserEntity
      */
     public UserEntity toEntity(UserDTO dto) {
-        UserEntity entity = new UserEntity();
-        entity.setScimId(UUID.randomUUID().toString());
+        UserEntity entity = new UserEntity(); // ❌ Do NOT assign scimId manually
         entity.setUserName(dto.getUserName());
         entity.setExternalId(dto.getExternalId());
         entity.setActive(dto.getActive() != null ? dto.getActive() : true);

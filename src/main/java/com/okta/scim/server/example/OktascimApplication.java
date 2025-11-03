@@ -1,3 +1,4 @@
+
 package com.okta.scim.server.example;
 
 import org.springframework.boot.SpringApplication;

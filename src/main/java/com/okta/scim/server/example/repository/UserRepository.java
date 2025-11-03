@@ -16,38 +16,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The {@code UserRepository} interface provides CRUD and query operations for
- * {@link UserEntity} objects using Spring Data JPA.
- * <p>
- * This interface extends {@link JpaRepository}, inheriting standard database operations
- * such as save, findAll, delete, and findById.
- * <p>
- * Custom query methods are defined to retrieve users based on SCIM-specific fields.
+ * Repository interface for managing {@link UserEntity} instances.
  */
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     /**
      * Finds a user by their username.
-     *
-     * @param userName the username to search for.
-     * @return the matching {@link UserEntity}, or {@code null} if no match is found.
      */
     UserEntity findByUserName(String userName);
 
     /**
      * Finds a user by their SCIM ID.
-     *
-     * @param scimId the SCIM identifier to search for.
-     * @return the matching {@link UserEntity}, or {@code null} if no match is found.
      */
-    UserEntity findByScimId(String scimId);
+    UserEntity findByScimId(Long scimId);
 
     /**
      * Finds a user by their external (Okta) ID.
-     *
-     * @param externalId the external identifier assigned by Okta.
-     * @return the matching {@link UserEntity}, or {@code null} if no match is found.
      */
     UserEntity findByExternalId(String externalId);
 }

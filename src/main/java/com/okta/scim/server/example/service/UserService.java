@@ -35,7 +35,8 @@ public class UserService {
      */
     public UserEntity createOrReactivateUser(UserDTO userDTO) {
         String username = userDTO.getUserName() != null ? userDTO.getUserName().trim() : null;
-        if (username == null) throw new IllegalArgumentException("Username is required");
+        if (username == null)
+            throw new IllegalArgumentException("Username is required");
 
         UserEntity existing = userRepository.findByUserName(username);
         if (existing != null) {
@@ -45,7 +46,7 @@ public class UserService {
         }
 
         UserEntity newEntity = userMapper.toEntity(userDTO);
-        newEntity.setScimId(UUID.randomUUID().toString());
+        // ✅ Remove UUID assignment; DB will auto-generate scimId
         return userRepository.save(newEntity);
     }
 
@@ -56,11 +57,10 @@ public class UserService {
      * @param userDTO input user data
      * @return updated or newly created UserEntity
      */
-    public UserEntity updateUser(String scimId, UserDTO userDTO) {
-        UserEntity found = userRepository.findByUserName(userDTO.getUserName());
+    public UserEntity updateUser(Long scimId, UserDTO userDTO) {
+        UserEntity found = userRepository.findByScimId(scimId);
         if (found == null) {
             UserEntity newEntity = userMapper.toEntity(userDTO);
-            newEntity.setScimId(UUID.randomUUID().toString());
             return userRepository.save(newEntity);
         } else {
             userMapper.updateEntityFromDTO(userDTO, found);
@@ -108,7 +108,7 @@ public class UserService {
      * @param scimId SCIM user ID
      * @return UserEntity or null
      */
-    public UserEntity getByScimId(String scimId) {
+    public UserEntity getByScimId(Long scimId) {
         return userRepository.findByScimId(scimId);
     }
 
@@ -119,13 +119,12 @@ public class UserService {
      * @param patchRequest map of operations
      * @return updated UserEntity or null if not found
      */
-    public UserEntity patchUser(String scimId, Map<String, Object> patchRequest) {
+    public UserEntity patchUser(Long scimId, Map<String, Object> patchRequest) {
         UserEntity existing = userRepository.findByScimId(scimId);
-        if (existing == null) return null;
+        if (existing == null)
+            return null;
 
         if (patchRequest.containsKey("Operations")) {
-   // This part of the code is implementing a method to soft delete (deactivate) a user in the SCIM
-   // system.
             List<Map<String, Object>> operations = (List<Map<String, Object>>) patchRequest.get("Operations");
             for (Map<String, Object> op : operations) {
                 String opType = ((String) op.get("op")).toLowerCase();
@@ -144,7 +143,6 @@ public class UserService {
         return userRepository.save(existing);
     }
 
-
     /**
      * Builds a SCIM-compliant response map for a user.
      *
@@ -154,15 +152,15 @@ public class UserService {
     public Map<String, Object> buildSCIMResponse(UserEntity user) {
         Map<String, Object> resp = new LinkedHashMap<>();
         resp.put("schemas", List.of("urn:ietf:params:scim:schemas:core:2.0:User"));
-        resp.put("id", user.getScimId());
+        // Convert numeric scimId to String for SCIM spec compliance
+        resp.put("id", String.valueOf(user.getScimId()));
         resp.put("externalId", user.getExternalId());
         resp.put("userName", user.getUserName());
         resp.put("active", user.getActive());
 
         Map<String, Object> nameMap = Map.of(
                 "givenName", user.getGivenName(),
-                "familyName", user.getFamilyName()
-        );
+                "familyName", user.getFamilyName());
         resp.put("name", nameMap);
 
         if (user.getEmail() != null) {

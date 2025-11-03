@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * REST controller for SCIM User operations such as create, update, delete, and query.
+ * REST controller for SCIM User operations such as create, update, delete, and
+ * query.
  */
 @RestController
 @RequestMapping("/scim/v2/Users")
@@ -61,7 +62,7 @@ public class UserController {
      * @return updated SCIM user response
      */
     @PutMapping("/{scimId}")
-    public ResponseEntity<Map<String, Object>> putUser(@PathVariable String scimId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> putUser(@PathVariable Long scimId, @RequestBody UserDTO userDTO) {
         logger.info("PUT /Users/{} called", scimId);
         UserEntity updated = userService.updateUser(scimId, userDTO);
         logger.info("PUT /Users end");
@@ -89,28 +90,30 @@ public class UserController {
      * @return user details if found
      */
     @GetMapping("/{scimId}")
-    public ResponseEntity<Map<String, Object>> getUser(@PathVariable String scimId) {
+    public ResponseEntity<Map<String, Object>> getUser(@PathVariable Long scimId) {
         UserEntity user = userService.getByScimId(scimId);
-        if (user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(userService.buildSCIMResponse(user));
     }
 
     /**
      * Soft deletes (deactivates) a user.
      *
-     * @param scimId        SCIM user ID
-     * @param patchRequest  patch operations
+     * @param scimId       SCIM user ID
+     * @param patchRequest patch operations
      * @return patched user response
      */
     @PatchMapping("/{scimId}")
-    public ResponseEntity<Map<String, Object>> patchUser(@PathVariable String scimId, @RequestBody Map<String, Object> patchRequest) {
+    public ResponseEntity<Map<String, Object>> patchUser(@PathVariable Long scimId,
+            @RequestBody Map<String, Object> patchRequest) {
         logger.info("PATCH /Users/{} payload: {}", scimId, patchRequest);
         UserEntity patched = userService.patchUser(scimId, patchRequest);
-        if (patched == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (patched == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         logger.info("PATCH /Users end");
         return ResponseEntity.ok(userService.buildSCIMResponse(patched));
     }
-
 
     /**
      * Logs object as JSON for debugging.
@@ -122,5 +125,5 @@ public class UserController {
             logger.warn("{}: [could not serialize]", prefix);
         }
     }
-    
+
 }

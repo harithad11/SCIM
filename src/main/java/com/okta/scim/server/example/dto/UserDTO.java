@@ -1,3 +1,4 @@
+
 /**
  * UserDTO.java
  *
@@ -19,8 +20,8 @@ import java.util.Collection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
 
-    private String id;             // Optional DB ID
-    private String scimId;         // SCIM unique ID
+    private String id; // Optional DB ID
+    private String scimId; // SCIM unique ID
     private String userName;
     private Name name;
     private Collection<Email> emails;
@@ -30,7 +31,8 @@ public class UserDTO {
     /**
      * Default constructor.
      */
-    public UserDTO() {}
+    public UserDTO() {
+    }
 
     /**
      * Constructs UserDTO from a SCIMUser object.
@@ -51,41 +53,85 @@ public class UserDTO {
 
     // ------------------ Getters & Setters ------------------ //
 
-    public String getScimId() { return scimId; }
-    public void setScimId(String scimId) { this.scimId = scimId; }
+    public String getScimId() {
+        return scimId;
+    }
 
-    public String getExternalId() { return externalId; }
-    public void setExternalId(String externalId) { this.externalId = externalId; }
+    public void setScimId(String scimId) {
+        this.scimId = scimId;
+    }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getExternalId() {
+        return externalId;
+    }
 
-    public String getUserName() { return userName; }
-    public void setUserName(String userName) { this.userName = userName; }
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
 
-    public Name getName() { return name; }
-    public void setName(Name name) { this.name = name; }
+    public String getId() {
+        return id;
+    }
 
-    public Collection<Email> getEmails() { return emails; }
-    public void setEmails(Collection<Email> emails) { this.emails = emails; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public Collection<Email> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(Collection<Email> emails) {
+        this.emails = emails;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     /**
      * Gets the given (first) name from Name object.
      *
      * @return given name or null
      */
-    public String getGivenName() { return name != null ? name.getGivenName() : null; }
+    public String getGivenName() {
+        return name != null ? name.getGivenName() : null;
+    }
 
     /**
      * Gets the family (last) name from Name object.
      *
      * @return family name or null
      */
-    public String getFamilyName() { return name != null ? name.getFamilyName() : null; }
+    public String getFamilyName() {
+        return name != null ? name.getFamilyName() : null;
+    }
 
-    public String getFirstName() { return getGivenName(); }
-    public String getLastName() { return getFamilyName(); }
+    public String getFirstName() {
+        return getGivenName();
+    }
+
+    public String getLastName() {
+        return getFamilyName();
+    }
 }

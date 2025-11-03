@@ -24,77 +24,37 @@ import java.util.UUID;
 @Table(name = "users")
 public class UserEntity {
 
-    /**
-     * The unique SCIM identifier for the user.
-     * This field acts as the primary key in the database.
-     * It is generated as a random UUID if not provided.
-     */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment by database
     @Column(name = "scim_id", nullable = false, unique = true)
-    private String scimId;
+    private Long scimId; // 👈 change to Long or Integer for auto-increment
 
-    /**
-     * The external identifier associated with the user in Okta.
-     * Used to map between Okta and SCIM user records.
-     */
     @Column(name = "external_id", unique = true)
     private String externalId;
 
-    /**
-     * The username (unique) associated with this user account.
-     */
     @Column(nullable = false, unique = true)
     private String userName;
 
-    /**
-     * The given (first) name of the user.
-     */
     @Column
     private String givenName;
 
-    /**
-     * The family (last) name of the user.
-     */
     @Column
     private String familyName;
 
-    /**
-     * The email address of the user.
-     */
     @Column
     private String email;
 
-    /**
-     * Indicates whether the user account is active.
-     * Defaults to {@code true} for all newly created users.
-     */
     @Column(nullable = false)
-    private Boolean active  = true;
+    private Boolean active = true;
 
-    // --------------------------------------------------------
-    // Constructors
-    // --------------------------------------------------------
-
-    /**
-     * Default constructor.
-     * <p>
-     * If no SCIM ID is provided, this constructor automatically generates a
-     * random UUID for the {@code scimId} field and sets {@code active } to {@code true}.
-     */
     public UserEntity() {
-        if (this.scimId == null) {
-            this.scimId = UUID.randomUUID().toString();
-        }
-        this.active  = true;
+        this.active = true;
+        // ❌ Do NOT assign scimId here anymore — database will handle it.
     }
 
-
-     // --------------------------------------------------------
     // Getters and Setters
-    // --------------------------------------------------------
-
-    public String getScimId() { return scimId; }
-    public void setScimId(String scimId) { this.scimId = scimId; }
+    public Long getScimId() { return scimId; }
+    public void setScimId(Long scimId) { this.scimId = scimId; }
 
     public String getExternalId() { return externalId; }
     public void setExternalId(String externalId) { this.externalId = externalId; }
@@ -111,6 +71,16 @@ public class UserEntity {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public Boolean getActive() { return active ; }
-    public void setActive(Boolean active ) { this.active  = active ; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }
+
+
+
+
+
+
+
+
+
+
